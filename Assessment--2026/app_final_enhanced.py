@@ -7,6 +7,8 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import pathlib
+from pathlib import Path
 
 try:
     from openai import OpenAI
@@ -48,12 +50,14 @@ PLOT_LAYOUT = dict(
 
 @st.cache_data
 def load_data():
-    pair_df = pd.read_csv("pair_interactions.csv")
-    inflow_df = pd.read_csv("inflow.csv")
-    outflow_df = pd.read_csv("outflow.csv")
-    county_df = pd.read_csv("flows_combined.csv")
-    od_df = pd.read_csv("all_counties_flows.csv")
-    enrichment_df = pd.read_csv("county_enrichment_2003_2004.csv")
+    BASE_DIR = Path(__file__).resolve().parent
+
+    pair_df = pd.read_csv(BASE_DIR / "pair_interactions.csv")
+    inflow_df = pd.read_csv(BASE_DIR / "inflow.csv")
+    outflow_df = pd.read_csv(BASE_DIR / "outflow.csv")
+    county_df = pd.read_csv(BASE_DIR / "flows_combined.csv")
+    od_df = pd.read_csv(BASE_DIR / "all_counties_flows.csv")
+    enrichment_df = pd.read_csv(BASE_DIR / "county_enrichment_2003_2004.csv")
 
     # Standardize FIPS
     for df, col in [
